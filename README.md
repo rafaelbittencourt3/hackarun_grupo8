@@ -1,6 +1,6 @@
 # Guia do Shopping
 
-**Grupo 8 · Engenharia de Software**
+**Grupo 8 Squirtle**
 
 **Tema 03 — Descoberta de produtos, lojas e promoções**
 
@@ -48,7 +48,7 @@ Para experimentar a navegação, abra a ficha de uma loja, toque em **Me leve at
 
 ## Consumo de API
 
-**Consumo de API** foi a prática técnica sorteada para o Grupo 8.
+**Consumo de API** foi a prática técnica sorteada para o Grupo 8 Squirtle.
 
 ![Fluxo da API. O app Flutter troca dados em JSON por HTTPS com o Laravel, que consulta o catálogo no MySQL e usa o DeepSeek para gerar respostas e roteiros.](output/imagens/fluxo-da-api.png)
 
