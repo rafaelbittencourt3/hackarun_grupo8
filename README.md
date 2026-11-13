@@ -16,14 +16,18 @@ Imagine chegar ao shopping para comprar um tênis de corrida sem saber quais loj
 
 **A compra é combinada com o vendedor.** Quando a loja tem WhatsApp cadastrado, o botão **Falar com atendente** abre a conversa fora do aplicativo.
 
-[![Prévia do planejamento: Início, Guia, Detalhes da loja e Bússola](output/pdf/previa-planejamento.png)](output/pdf/Planejamento_grupo_8.pdf)
+![Esboço das telas em modo escuro. O visitante sai do Início, pergunta ao Guia, abre os detalhes da loja e segue a bússola.](output/imagens/fluxo-do-aplicativo.png)
 
 ## O diferencial do Guia do Shopping
 
 O diferencial está em **ligar a descoberta do produto à orientação dentro do shopping**. Da resposta do Guia, o visitante pode abrir a ficha da loja e iniciar a bússola. A mesma busca serve para decidir o que procurar e saber para onde ir.
 
 - **Busca por foto.** Quando a pessoa viu um produto e não sabe o nome, o celular identifica características da imagem e o Guia procura opções parecidas no catálogo.
-- **Roteiro para várias paradas.** Para um pedido como “Quero um tênis e um café em até uma hora”, o Guia sugere uma sequência de lojas com estimativas de tempo e custo. A bússola orienta cada parada.
+- **Roteiro para várias paradas.** O Guia sugere uma sequência de paradas com estimativas de tempo e custo. A bússola orienta o visitante até cada destino.
+
+Na demonstração, o visitante pediu um presente, um tênis e um lanche com até **R$ 400**. O app sugeriu quatro paradas em **53 minutos**, com custo estimado de **R$ 274,60**. O pão de queijo e o café expresso aparecem como duas paradas no Café Aroma.
+
+![Roteiro gerado pelo app em modo demonstração. Livraria Página Um para o livro, Passo Certo para o tênis e duas paradas no Café Aroma para o lanche e o café.](output/imagens/roteiro-de-compras.png)
 
 ## Como experimentar
 
@@ -46,7 +50,7 @@ Para experimentar a navegação, abra a ficha de uma loja, toque em **Me leve at
 
 **Consumo de API** foi a prática técnica sorteada para o Grupo 8.
 
-![Fluxo da API. O app Flutter troca dados em JSON por HTTPS com o Laravel, que consulta o catálogo no MySQL e usa o DeepSeek para gerar respostas e roteiros.](output/pdf/fluxo-api.png)
+![Fluxo da API. O app Flutter troca dados em JSON por HTTPS com o Laravel, que consulta o catálogo no MySQL e usa o DeepSeek para gerar respostas e roteiros.](output/imagens/fluxo-da-api.png)
 
 O Flutter faz requisições HTTPS e recebe respostas em JSON. O Laravel valida as entradas, consulta o catálogo e chama o DeepSeek quando o visitante faz uma pergunta ou pede um roteiro. Na busca por foto, o app envia os rótulos identificados pelo ML Kit e mantém a imagem no aparelho.
 
