@@ -1,28 +1,35 @@
 # Guia do Shopping
 
-Projeto do Grupo 8 de Engenharia de Software. O aplicativo Android ajuda o visitante a encontrar um produto, descobrir em qual loja ele está no catálogo e seguir até lá com uma bússola.
+**Grupo 8 · Engenharia de Software**
 
-**[Baixar APK assinado para Android](https://github.com/rafaelbittencourt3/hackarun_grupo8/releases/download/v1.0.0/guia-do-shopping.apk)** · Versão 1.0.0 · 41,6 MB
+**Tema 03 — Descoberta de produtos, lojas e promoções**
 
-Abra o arquivo no celular para instalar. Se o Android pedir, autorize a instalação pela origem usada para baixar o APK.
+Imagine chegar ao shopping para comprar um tênis de corrida sem saber quais lojas vendem esse tipo de produto, em qual andar ficam ou onde há uma oferta. O **Guia do Shopping** reúne essas informações em um app Android e ajuda o visitante a seguir até a loja escolhida.
 
-## Planejamento técnico inicial
+**[Baixar APK assinado para Android](https://github.com/rafaelbittencourt3/hackarun_grupo8/releases/download/v1.0.0/guia-do-shopping.apk)** (v1.0.0, 41,6 MB) · **[Ver o PDF do planejamento técnico](output/pdf/Planejamento_grupo_8.pdf)**
 
-**[📄 Abrir o PDF do Grupo 8 no GitHub](output/pdf/Planejamento_grupo_8.pdf)**
+## Como funciona na prática
 
-O PDF da primeira entrega reúne a proposta, os esboços das telas, as tecnologias, a arquitetura e a prática sorteada do grupo, **Consumo de API**.
+1. **O visitante diz o que procura.** Pode pesquisar pelo nome, perguntar ao Guia “Onde encontro um tênis de corrida?” ou usar uma foto para buscar produtos parecidos.
+2. **O app indica opções do catálogo.** No exemplo da demonstração, o Guia pode sugerir um tênis da loja Passo Certo. O visitante abre a ficha para ver o andar, os produtos e as ofertas cadastradas.
+3. **O visitante segue até a loja.** Ao tocar em **Me leve até a loja**, a bússola mostra a direção e a distância estimada. O app também dá instruções por voz e avisa ao chegar.
+
+**A compra é combinada com o vendedor.** Quando a loja tem WhatsApp cadastrado, o botão **Falar com atendente** abre a conversa fora do aplicativo.
 
 [![Prévia do planejamento: Início, Guia, Detalhes da loja e Bússola](output/pdf/previa-planejamento.png)](output/pdf/Planejamento_grupo_8.pdf)
 
-## Da busca até a loja
+## O diferencial do Guia do Shopping
 
-1. Em **Início** ou **Lojas**, o visitante pesquisa pelo nome da loja ou do produto e consulta o catálogo e as ofertas.
-2. No **Guia**, pode perguntar “Onde encontro um tênis de corrida?” ou usar uma foto para procurar algo parecido. Se quiser passar por várias lojas, pode pedir um roteiro com estimativas de tempo e custo.
-3. Em **Detalhes da loja**, vê o andar e os produtos. O botão **Me leve até a loja** abre a bússola, que mostra a direção e a distância e avisa ao chegar.
+O diferencial está em **ligar a descoberta do produto à orientação dentro do shopping**. Da resposta do Guia, o visitante pode abrir a ficha da loja e iniciar a bússola. A mesma busca serve para decidir o que procurar e saber para onde ir.
 
-**A compra é combinada com o vendedor.** Preços e ofertas ajudam na escolha. Quando a loja tem WhatsApp cadastrado, **Falar com atendente** abre a conversa fora do aplicativo. O shopping e o catálogo são fictícios, e a caminhada pode ser simulada para a demonstração.
+- **Busca por foto.** Quando a pessoa viu um produto e não sabe o nome, o celular identifica características da imagem e o Guia procura opções parecidas no catálogo.
+- **Roteiro para várias paradas.** Para um pedido como “Quero um tênis e um café em até uma hora”, o Guia sugere uma sequência de lojas com estimativas de tempo e custo. A bússola orienta cada parada.
 
-O app oferece suporte a leitor de tela, letras grandes, modo escuro e redução de movimento.
+## Como experimentar
+
+Abra o APK no Android para instalar. Se o sistema pedir, autorize a instalação pela origem usada para baixar o arquivo.
+
+Para experimentar a navegação, abra a ficha de uma loja, toque em **Me leve até a loja** e escolha **Simular caminhada**. O shopping, as lojas e os preços são fictícios. O app oferece suporte a leitor de tela, letras grandes, modo escuro e redução de movimento.
 
 ## Arquitetura e tecnologias
 
@@ -36,6 +43,8 @@ O app oferece suporte a leitor de tela, letras grandes, modo escuro e redução 
 | Geolocator, Flutter Compass e Flutter TTS | Localização, direção e instruções por voz |
 
 ## Consumo de API
+
+**Consumo de API** foi a prática técnica sorteada para o Grupo 8.
 
 O Flutter faz requisições HTTPS e recebe respostas em JSON. O Laravel valida as entradas, consulta o catálogo e chama o DeepSeek quando o visitante faz uma pergunta ou pede um roteiro. Na busca por foto, o app envia os rótulos identificados pelo ML Kit e mantém a imagem no aparelho.
 
