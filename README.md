@@ -2,6 +2,10 @@
 
 Projeto do Grupo 8 de Engenharia de Software. O aplicativo Android ajuda o visitante a encontrar um produto, descobrir em qual loja ele está no catálogo e seguir até lá com uma bússola.
 
+**[Baixar APK assinado para Android](https://github.com/rafaelbittencourt3/hackarun_grupo8/releases/download/v1.0.0/guia-do-shopping.apk)** · Versão 1.0.0 · 41,6 MB
+
+Abra o arquivo no celular para instalar. Se o Android pedir, autorize a instalação pela origem usada para baixar o APK.
+
 ## Planejamento técnico inicial
 
 **[📄 Abrir o PDF do Grupo 8 no GitHub](output/pdf/Planejamento_grupo_8.pdf)**
