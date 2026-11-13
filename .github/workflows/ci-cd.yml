@@ -87,7 +87,7 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           mkdir -p "$RUNNER_TEMP/backend"
-          git archive HEAD:backend-app | tar -x -C "$RUNNER_TEMP/backend"
+          git -C "$GITHUB_WORKSPACE" archive HEAD:backend-app | tar -x -C "$RUNNER_TEMP/backend"
           cp -a public/build "$RUNNER_TEMP/backend/public/"
           composer --working-dir="$RUNNER_TEMP/backend" install --no-dev --no-scripts --no-interaction --prefer-dist --no-progress --optimize-autoloader
           tar -czf "$RUNNER_TEMP/backend.tar.gz" -C "$RUNNER_TEMP/backend" .
@@ -115,7 +115,10 @@ jobs:
           distribution: temurin
           java-version: '17'
       - name: Instalar Android SDK do projeto
-        run: sdkmanager 'platforms;android-34' 'build-tools;30.0.3' 'ndk;23.1.7779620'
+        run: |
+          sdkmanager="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          test -x "$sdkmanager"
+          "$sdkmanager" 'platforms;android-34' 'build-tools;30.0.3' 'ndk;23.1.7779620'
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           flutter-version: '3.24.1'
