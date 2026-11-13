@@ -1,0 +1,187 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  security:
+    name: Segurança
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Procurar segredos no Git
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITLEAKS_ENABLE_COMMENTS: 'false'
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: 'false'
+      - uses: shivammathur/setup-php@fcafdd6392932010c2bd5094439b8e33be2a8a09 # 2.37.0
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          coverage: none
+      - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        with:
+          node-version: '22'
+      - name: Auditar dependências PHP
+        working-directory: backend-app
+        run: composer audit --locked --no-interaction
+      - name: Auditar dependências npm
+        if: ${{ !cancelled() }}
+        working-directory: backend-app
+        run: npm audit --package-lock-only --audit-level=high
+
+  backend:
+    name: Laravel e frontend
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+        working-directory: backend-app
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@fcafdd6392932010c2bd5094439b8e33be2a8a09 # 2.37.0
+        with:
+          php-version: '8.4'
+          extensions: mbstring, pdo_sqlite
+          tools: composer:v2
+          coverage: none
+      - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: backend-app/package-lock.json
+      - name: Instalar dependências
+        run: |
+          cp .env.example .env
+          composer install --no-interaction --prefer-dist --no-progress
+          php artisan key:generate --no-interaction
+          npm ci --no-audit
+      - name: Analisar código
+        run: |
+          ./vendor/bin/pint --test
+          npm exec -- eslint .
+      - name: Compilar frontend e testar API
+        run: |
+          npm run build
+          ./vendor/bin/pest --ci
+      - name: Empacotar versão do backend
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p "$RUNNER_TEMP/backend"
+          git archive HEAD:backend-app | tar -x -C "$RUNNER_TEMP/backend"
+          cp -a public/build "$RUNNER_TEMP/backend/public/"
+          composer --working-dir="$RUNNER_TEMP/backend" install --no-dev --no-scripts --no-interaction --prefer-dist --no-progress --optimize-autoloader
+          tar -czf "$RUNNER_TEMP/backend.tar.gz" -C "$RUNNER_TEMP/backend" .
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: backend-${{ github.sha }}
+          path: ${{ runner.temp }}/backend.tar.gz
+          if-no-files-found: error
+
+  android:
+    name: Flutter e build Android
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+        working-directory: shop_app
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5.1.0
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Instalar Android SDK do projeto
+        run: sdkmanager 'platforms;android-34' 'build-tools;30.0.3' 'ndk;23.1.7779620'
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version: '3.24.1'
+          cache: true
+      - name: Analisar e testar Flutter
+        run: |
+          flutter pub get --enforce-lockfile
+          flutter analyze --no-pub
+          flutter test --no-pub
+      - name: Compilar APK de CI
+        run: flutter build apk --debug --no-pub
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: apk-debug-${{ github.sha }}
+          path: shop_app/build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    name: Deploy da API no CloudPanel
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.DEPLOY_ENABLED == 'true'
+    needs: [security, backend, android]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://hackarun8.safra.dev/
+    concurrency:
+      group: production-cloudpanel
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          name: backend-${{ github.sha }}
+          path: ${{ runner.temp }}/deployment
+      - name: Enviar versão pelo SSH
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          head_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          if [[ "$head_sha" != "$GITHUB_SHA" ]]; then
+            echo 'Há um commit mais recente na main. Esta versão não será implantada.'
+            exit 0
+          fi
+          : "${DEPLOY_HOST:?}" "${DEPLOY_USER:?}" "${DEPLOY_PATH:?}" "${DEPLOY_SSH_KEY:?}" "${DEPLOY_KNOWN_HOSTS:?}"
+          [[ "$DEPLOY_HOST" =~ ^[A-Za-z0-9.-]+$ && "$DEPLOY_USER" =~ ^[A-Za-z0-9_-]+$ && "$DEPLOY_PATH" =~ ^/home/[A-Za-z0-9/_\.-]+$ ]]
+          port="${DEPLOY_PORT:-22}"
+          [[ "$port" =~ ^[0-9]+$ ]]
+          umask 077
+          key_file=$(mktemp "$RUNNER_TEMP/deploy-key.XXXXXX")
+          host_file=$(mktemp "$RUNNER_TEMP/deploy-hosts.XXXXXX")
+          trap 'rm -f -- "$key_file" "$host_file"' EXIT
+          printf '%s\n' "$DEPLOY_SSH_KEY" > "$key_file"
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > "$host_file"
+          target="$DEPLOY_USER@$DEPLOY_HOST"
+          ssh_args=(-i "$key_file" -o "UserKnownHostsFile=$host_file" -o StrictHostKeyChecking=yes -o IdentitiesOnly=yes -o BatchMode=yes -o ConnectTimeout=15)
+          remote_bundle=".hackarun8-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT.tar.gz"
+          scp -P "$port" "${ssh_args[@]}" "$RUNNER_TEMP/deployment/backend.tar.gz" "$target:$remote_bundle"
+          ssh -p "$port" "${ssh_args[@]}" "$target" bash -s -- "$DEPLOY_PATH" "$remote_bundle" "$GITHUB_SHA" < .github/scripts/deploy-cloudpanel.sh

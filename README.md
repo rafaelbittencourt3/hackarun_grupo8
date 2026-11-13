@@ -106,6 +106,14 @@ Sem o `--dart-define`, o app usa o endereço definido em `lib/config.dart`.
 
 Testes: `flutter test`.
 
+## CI/CD
+
+O [GitHub Actions](https://github.com/rafaelbittencourt3/hackarun_grupo8/actions) roda em pushes e pull requests para `main` e `develop`. Ele verifica o código, roda os testes Laravel e Flutter, compila o frontend e gera um APK de debug para teste. O Gitleaks procura segredos no Git, e Composer e npm auditam as dependências travadas. Alertas graves do npm e falhas dos demais checks impedem o deploy.
+
+Em pushes para `main`, o workflow prepara um pacote do backend com os arquivos do commit, `vendor` de produção e os assets compilados. O deploy via SSH para o CloudPanel exige `DEPLOY_ENABLED=true` nas variáveis do repositório. Use o ambiente `production` para os secrets `DEPLOY_SSH_KEY` e `DEPLOY_KNOWN_HOSTS` e para as variáveis `DEPLOY_HOST`, `DEPLOY_PORT`, `DEPLOY_USER` e `DEPLOY_PATH`.
+
+O deploy preserva `.env`, storage e o banco, aplica as migrações e consulta a API após publicar. Se a implantação falhar, o script tenta restaurar os arquivos anteriores. Migrações já aplicadas seguem no banco.
+
 ## Créditos
 
 As fotos do catálogo vêm do [Pexels](https://www.pexels.com); os autores estão em `backend-app/public/images/catalog/credits.json`.

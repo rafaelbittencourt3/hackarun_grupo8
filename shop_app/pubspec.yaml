@@ -99,3 +99,5 @@ flutter:
 dependency_overrides:
   # A 4.6.2 exige um Flutter mais novo que o 3.24 instalado.
   geolocator_android: 4.6.1
+  # A 2.0.23 em diante pede a plataforma Android 35, que o Gradle do projeto nao le.
+  flutter_plugin_android_lifecycle: 2.0.22
