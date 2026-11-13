@@ -46,6 +46,8 @@ Para experimentar a navegação, abra a ficha de uma loja, toque em **Me leve at
 
 **Consumo de API** foi a prática técnica sorteada para o Grupo 8.
 
+![Fluxo da API. O app Flutter troca dados em JSON por HTTPS com o Laravel, que consulta o catálogo no MySQL e usa o DeepSeek para gerar respostas e roteiros.](output/pdf/fluxo-api.png)
+
 O Flutter faz requisições HTTPS e recebe respostas em JSON. O Laravel valida as entradas, consulta o catálogo e chama o DeepSeek quando o visitante faz uma pergunta ou pede um roteiro. Na busca por foto, o app envia os rótulos identificados pelo ML Kit e mantém a imagem no aparelho.
 
 A API oficial usa o endereço `https://hackarun8.safra.dev/api/v1`.
