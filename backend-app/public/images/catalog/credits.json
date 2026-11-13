@@ -1,0 +1,417 @@
+{
+  "images/catalog/stores/beleza-pura.jpg": {
+    "photo_id": 39004038,
+    "photographer": "Ela De Pure",
+    "url": "https://www.pexels.com/photo/modern-luxury-beauty-store-interior-design-39004038/"
+  },
+  "images/catalog/stores/bella-moda.jpg": {
+    "photo_id": 39440272,
+    "photographer": "Free Preset in BIO",
+    "url": "https://www.pexels.com/photo/illuminated-boutique-in-tbilisi-at-dusk-39440272/"
+  },
+  "images/catalog/stores/burger-house.jpg": {
+    "photo_id": 4809147,
+    "photographer": "Aleksandar Ljubicic",
+    "url": "https://www.pexels.com/photo/four-people-holding-burgers-4809147/"
+  },
+  "images/catalog/stores/cafe-aroma.jpg": {
+    "photo_id": 34153867,
+    "photographer": "abidin sobo harsono",
+    "url": "https://www.pexels.com/photo/cozy-vintage-coffee-shop-interior-in-warm-lighting-34153867/"
+  },
+  "images/catalog/stores/casa-e-conforto.jpg": {
+    "photo_id": 9290601,
+    "photographer": "Alexandra Kollstrem",
+    "url": "https://www.pexels.com/photo/colorful-cushions-on-the-sofa-9290601/"
+  },
+  "images/catalog/stores/cine-estrela.jpg": {
+    "photo_id": 18440206,
+    "photographer": "Tori Pezzulla❤️",
+    "url": "https://www.pexels.com/photo/illuminated-building-at-night-18440206/"
+  },
+  "images/catalog/stores/espaco-kids.jpg": {
+    "photo_id": 11015643,
+    "photographer": "عبدالرحمن الشناوي",
+    "url": "https://www.pexels.com/photo/a-young-boy-playing-on-the-playground-11015643/"
+  },
+  "images/catalog/stores/estilo-urbano.jpg": {
+    "photo_id": 13632832,
+    "photographer": "Markus Winkler",
+    "url": "https://www.pexels.com/photo/clothes-selection-in-store-13632832/"
+  },
+  "images/catalog/stores/farmacia-vida.jpg": {
+    "photo_id": 27781696,
+    "photographer": "Ela De Pure",
+    "url": "https://www.pexels.com/photo/ela-de-pure-skin-store-27781696/"
+  },
+  "images/catalog/stores/gamezone.jpg": {
+    "photo_id": 6962206,
+    "photographer": "Tam'z Peeranat",
+    "url": "https://www.pexels.com/photo/an-xbox-game-controller-6962206/"
+  },
+  "images/catalog/stores/livraria-pagina-um.jpg": {
+    "photo_id": 28175346,
+    "photographer": "Kamila  Nguyen",
+    "url": "https://www.pexels.com/photo/unexplored-lands-reveal-new-wonders-28175346/"
+  },
+  "images/catalog/stores/mundo-kids.jpg": {
+    "photo_id": 887821,
+    "photographer": "Tirachard Kumtanom",
+    "url": "https://www.pexels.com/photo/assorted-color-balls-floating-on-water-887821/"
+  },
+  "images/catalog/stores/otica-visao.jpg": {
+    "photo_id": 10182234,
+    "photographer": "m fooladi",
+    "url": "https://www.pexels.com/photo/portrait-of-a-woman-holding-a-book-10182234/"
+  },
+  "images/catalog/stores/passo-certo.jpg": {
+    "photo_id": 5771896,
+    "photographer": "Jake \"Sulli\" Swoyer",
+    "url": "https://www.pexels.com/photo/grayscale-photo-of-a-clothinig-store-5771896/"
+  },
+  "images/catalog/stores/sabor-da-praca.jpg": {
+    "photo_id": 8696464,
+    "photographer": "Farhad Ibrahimzade",
+    "url": "https://www.pexels.com/photo/steak-on-a-wooden-board-and-food-platters-on-a-table-8696464/"
+  },
+  "images/catalog/stores/sport-mania.jpg": {
+    "photo_id": 8743972,
+    "photographer": "Farhad Ibrahimzade",
+    "url": "https://www.pexels.com/photo/city-fashion-hand-shirt-8743972/"
+  },
+  "images/catalog/stores/techpoint.jpg": {
+    "photo_id": 4533076,
+    "photographer": "Drew Williams",
+    "url": "https://www.pexels.com/photo/gray-laptop-on-the-table-4533076/"
+  },
+  "images/catalog/products/analgesico-20-comprimidos.jpg": {
+    "photo_id": 13779112,
+    "photographer": "Supplements On Demand",
+    "url": "https://www.pexels.com/photo/pink-capsules-beside-plastic-bottle-on-a-surface-13779112/"
+  },
+  "images/catalog/products/armacao-de-grau-acetato.jpg": {
+    "photo_id": 36310717,
+    "photographer": "Pușcaș Adryan",
+    "url": "https://www.pexels.com/photo/stylish-red-framed-glasses-on-geometric-display-36310717/"
+  },
+  "images/catalog/products/base-liquida.jpg": {
+    "photo_id": 6713324,
+    "photographer": "Alex Reedson",
+    "url": "https://www.pexels.com/photo/a-woman-applying-blush-on-6713324/"
+  },
+  "images/catalog/products/batata-frita-grande.jpg": {
+    "photo_id": 27758755,
+    "photographer": "Ali Dashti",
+    "url": "https://www.pexels.com/photo/french-fries-in-a-box-on-a-pink-background-27758755/"
+  },
+  "images/catalog/products/blazer-feminino.jpg": {
+    "photo_id": 38652618,
+    "photographer": "Reza Roshan",
+    "url": "https://www.pexels.com/photo/fashion-model-in-red-blazer-on-white-background-38652618/"
+  },
+  "images/catalog/products/blocos-de-montar-500-pecas.jpg": {
+    "photo_id": 18069085,
+    "photographer": "Google DeepMind",
+    "url": "https://www.pexels.com/photo/an-artist-s-illustration-of-artificial-intelligence-ai-this-image-represents-the-role-of-ai-in-computer-optimisation-for-reduced-energy-consumption-it-was-created-by-linus-zoll-as-part-18069085/"
+  },
+  "images/catalog/products/blusa-de-seda.jpg": {
+    "photo_id": 7515076,
+    "photographer": "Asm Arif",
+    "url": "https://www.pexels.com/photo/woman-in-purple-long-sleeve-shirt-7515076/"
+  },
+  "images/catalog/products/bola-de-futebol-society.jpg": {
+    "photo_id": 28222529,
+    "photographer": "Tunahan KALAYCI",
+    "url": "https://www.pexels.com/photo/adidas-soccer-ball-28222529/"
+  },
+  "images/catalog/products/bolsa-transversal.jpg": {
+    "photo_id": 27174548,
+    "photographer": "José Martin Segura Benites",
+    "url": "https://www.pexels.com/photo/photo-of-a-black-leather-handbag-27174548/"
+  },
+  "images/catalog/products/boneca-articulada.jpg": {
+    "photo_id": 12109904,
+    "photographer": "Tailor Mia",
+    "url": "https://www.pexels.com/photo/crocheted-soft-toy-12109904/"
+  },
+  "images/catalog/products/caderno-universitario.jpg": {
+    "photo_id": 29765813,
+    "photographer": "Jilly Noble",
+    "url": "https://www.pexels.com/photo/pink-office-supplies-on-a-minimalist-desk-29765813/"
+  },
+  "images/catalog/products/cafe-expresso.jpg": {
+    "photo_id": 28191270,
+    "photographer": "Bingqian Li",
+    "url": "https://www.pexels.com/photo/a-yellow-cup-with-a-spoon-on-a-saucer-28191270/"
+  },
+  "images/catalog/products/calca-jeans-slim.jpg": {
+    "photo_id": 18533669,
+    "photographer": "Tien Nguyen",
+    "url": "https://www.pexels.com/photo/camera-cotton-and-jeans-18533669/"
+  },
+  "images/catalog/products/camisa-de-time-oficial.jpg": {
+    "photo_id": 27565819,
+    "photographer": "José Martin Segura Benites",
+    "url": "https://www.pexels.com/photo/shoes-peru-27565819/"
+  },
+  "images/catalog/products/camiseta-basica-algodao.jpg": {
+    "photo_id": 8146450,
+    "photographer": "John Bastian",
+    "url": "https://www.pexels.com/photo/yellow-and-red-shirts-hanging-8146450/"
+  },
+  "images/catalog/products/capinha-para-celular.jpg": {
+    "photo_id": 7989741,
+    "photographer": "Carlos Jairo",
+    "url": "https://www.pexels.com/photo/an-expensive-cellphone-on-a-black-surface-7989741/"
+  },
+  "images/catalog/products/cappuccino.jpg": {
+    "photo_id": 28496565,
+    "photographer": "Jovan Popović",
+    "url": "https://www.pexels.com/photo/artistic-cappuccino-with-latte-art-on-marble-table-28496565/"
+  },
+  "images/catalog/products/carregador-portatil-10000-mah.jpg": {
+    "photo_id": 38649173,
+    "photographer": "RORRY_ Official",
+    "url": "https://www.pexels.com/photo/minimalist-mobile-accessories-with-rorry-power-banks-38649173/"
+  },
+  "images/catalog/products/carrinho-de-controle-remoto.jpg": {
+    "photo_id": 6988206,
+    "photographer": "Елена Гунько",
+    "url": "https://www.pexels.com/photo/red-toy-car-near-paper-roses-6988206/"
+  },
+  "images/catalog/products/chinelo-conforto.jpg": {
+    "photo_id": 28607587,
+    "photographer": "ALOK DAS",
+    "url": "https://www.pexels.com/photo/vibrant-pink-flip-flops-on-stylish-background-28607587/"
+  },
+  "images/catalog/products/combo-pipoca-e-refrigerante.jpg": {
+    "photo_id": 7603970,
+    "photographer": "zafiro media",
+    "url": "https://www.pexels.com/photo/a-bucket-of-popcorn-beside-popcorn-machine-7603970/"
+  },
+  "images/catalog/products/conjunto-de-panelas-5-pecas.jpg": {
+    "photo_id": 36552082,
+    "photographer": "juan pinales",
+    "url": "https://www.pexels.com/photo/stainless-steel-cooking-pot-with-lid-on-dark-background-36552082/"
+  },
+  "images/catalog/products/controle-sem-fio.jpg": {
+    "photo_id": 16070479,
+    "photographer": "Marcelo Verfe",
+    "url": "https://www.pexels.com/photo/close-up-of-a-playstation-joystick-16070479/"
+  },
+  "images/catalog/products/creme-hidratante-corporal.jpg": {
+    "photo_id": 33537356,
+    "photographer": "Makrufin Muhammad",
+    "url": "https://www.pexels.com/photo/marlov-white-glow-body-lotion-collection-display-33537356/"
+  },
+  "images/catalog/products/escova-de-dentes.jpg": {
+    "photo_id": 8103078,
+    "photographer": "Rohan Dalal",
+    "url": "https://www.pexels.com/photo/composition-with-toothbrushes-8103078/"
+  },
+  "images/catalog/products/fatia-de-bolo-de-cenoura.jpg": {
+    "photo_id": 31430610,
+    "photographer": "Jared Kaeb",
+    "url": "https://www.pexels.com/photo/delicious-homemade-carrot-cake-slice-with-frosting-31430610/"
+  },
+  "images/catalog/products/feijoada-completa.jpg": {
+    "photo_id": 8992843,
+    "photographer": "I Own My Food Art",
+    "url": "https://www.pexels.com/photo/cooked-rice-with-vegetables-on-white-ceramic-plate-8992843/"
+  },
+  "images/catalog/products/fone-de-ouvido-bluetooth.jpg": {
+    "photo_id": 3394650,
+    "photographer": "Sound On",
+    "url": "https://www.pexels.com/photo/white-wireless-headphones-3394650/"
+  },
+  "images/catalog/products/garrafa-termica-1-litro.jpg": {
+    "photo_id": 30276131,
+    "photographer": "Hkn clk",
+    "url": "https://www.pexels.com/photo/winter-hot-drink-in-striped-mugs-outdoors-30276131/"
+  },
+  "images/catalog/products/hamburguer-classico.jpg": {
+    "photo_id": 20722047,
+    "photographer": "ᗩᑎᑌᑭKᑌᗰᎪᏒ PATEL",
+    "url": "https://www.pexels.com/photo/fork-and-knife-around-cheeseburger-with-meat-20722047/"
+  },
+  "images/catalog/products/hamburguer-duplo-com-bacon.jpg": {
+    "photo_id": 23106708,
+    "photographer": "Ali Dashti",
+    "url": "https://www.pexels.com/photo/hamburger-and-vegetables-on-a-plate-23106708/"
+  },
+  "images/catalog/products/headset-gamer.jpg": {
+    "photo_id": 4225229,
+    "photographer": "Huy Phan",
+    "url": "https://www.pexels.com/photo/keyboard-with-smartphone-gamepad-and-headphones-4225229/"
+  },
+  "images/catalog/products/ingresso-inteira.jpg": {
+    "photo_id": 13430016,
+    "photographer": "Andy Urdaneta",
+    "url": "https://www.pexels.com/photo/woman-in-silver-dress-leaning-on-red-chairs-13430016/"
+  },
+  "images/catalog/products/ingresso-meia.jpg": {
+    "photo_id": 426976,
+    "photographer": "Jacob Morch",
+    "url": "https://www.pexels.com/photo/people-inside-dark-room-with-spotlights-426976/"
+  },
+  "images/catalog/products/jaqueta-jeans.jpg": {
+    "photo_id": 3649765,
+    "photographer": "Akshay Dua",
+    "url": "https://www.pexels.com/photo/man-wearing-blue-denim-jacket-3649765/"
+  },
+  "images/catalog/products/jogo-de-cama-casal.jpg": {
+    "photo_id": 35229095,
+    "photographer": "Pușcaș Adryan",
+    "url": "https://www.pexels.com/photo/modern-minimalist-bedroom-interior-design-35229095/"
+  },
+  "images/catalog/products/jogo-de-futebol-2026.jpg": {
+    "photo_id": 37935954,
+    "photographer": "Jay Moon",
+    "url": "https://www.pexels.com/photo/hands-playing-with-a-retro-gaming-controller-37935954/"
+  },
+  "images/catalog/products/jogo-de-tabuleiro-familia.jpg": {
+    "photo_id": 792051,
+    "photographer": "Othmar Vigl",
+    "url": "https://www.pexels.com/photo/closeup-photography-of-yellow-red-green-and-blue-chess-piece-792051/"
+  },
+  "images/catalog/products/jogo-de-toalhas-4-pecas.jpg": {
+    "photo_id": 12679,
+    "photographer": "Thomas Cotton",
+    "url": "https://www.pexels.com/photo/white-towel-12679/"
+  },
+  "images/catalog/products/kit-de-canetas-coloridas.jpg": {
+    "photo_id": 14759603,
+    "photographer": "Patricia Luquet",
+    "url": "https://www.pexels.com/photo/multicoloured-pencils-against-a-yellow-background-14759603/"
+  },
+  "images/catalog/products/kit-shampoo-e-condicionador.jpg": {
+    "photo_id": 8634417,
+    "photographer": "Kate Branch",
+    "url": "https://www.pexels.com/photo/cosmetics-on-a-wooden-shelf-8634417/"
+  },
+  "images/catalog/products/lentes-de-contato-mensais.jpg": {
+    "photo_id": 30896215,
+    "photographer": "Italo Kaua",
+    "url": "https://www.pexels.com/photo/close-up-of-a-vibrant-green-eye-with-lush-eyelashes-30896215/"
+  },
+  "images/catalog/products/livro-infantil-ilustrado.jpg": {
+    "photo_id": 1517355,
+    "photographer": "Nubia Navarro (nubikini)",
+    "url": "https://www.pexels.com/photo/assorted-title-books-on-brown-wooden-shelf-1517355/"
+  },
+  "images/catalog/products/luminaria-de-mesa.jpg": {
+    "photo_id": 31410610,
+    "photographer": "Pușcaș Adryan",
+    "url": "https://www.pexels.com/photo/stylish-wooden-desk-lamp-on-oak-table-31410610/"
+  },
+  "images/catalog/products/milk-shake-de-chocolate.jpg": {
+    "photo_id": 30660270,
+    "photographer": "Anil  Sharma",
+    "url": "https://www.pexels.com/photo/delicious-cookies-and-cream-milkshake-on-table-30660270/"
+  },
+  "images/catalog/products/mochila-esportiva.jpg": {
+    "photo_id": 19131365,
+    "photographer": "Joris Eschalier",
+    "url": "https://www.pexels.com/photo/man-on-a-trip-in-mountain-valley-19131365/"
+  },
+  "images/catalog/products/mouse-gamer-rgb.jpg": {
+    "photo_id": 12877898,
+    "photographer": "Kasra  Askari",
+    "url": "https://www.pexels.com/photo/keyboard-and-mouse-12877898/"
+  },
+  "images/catalog/products/notebook-15-polegadas.jpg": {
+    "photo_id": 12200696,
+    "photographer": "Boris K.",
+    "url": "https://www.pexels.com/photo/monochrome-photo-of-coffe-beside-a-laptop-12200696/"
+  },
+  "images/catalog/products/pao-de-queijo.jpg": {
+    "photo_id": 14122642,
+    "photographer": "Karina Ustiuzhanina",
+    "url": "https://www.pexels.com/photo/a-bread-with-scrambled-eggs-near-the-cup-of-coffee-on-the-table-14122642/"
+  },
+  "images/catalog/products/tenis-casual-urbano.jpg": {
+    "photo_id": 27008322,
+    "photographer": "José Martin Segura Benites",
+    "url": "https://www.pexels.com/photo/studio-shot-of-a-woman-wearing-white-sneakers-27008322/"
+  },
+  "images/catalog/products/tenis-de-corrida-maratona.jpg": {
+    "photo_id": 25492111,
+    "photographer": "ALOK DAS",
+    "url": "https://www.pexels.com/photo/womens-black-sport-shoes-25492111/"
+  },
+  "images/catalog/products/tenis-de-corrida-veloz.jpg": {
+    "photo_id": 29342147,
+    "photographer": "ALOK DAS",
+    "url": "https://www.pexels.com/photo/stylish-sports-shoes-on-wooden-plank-display-29342147/"
+  },
+  "images/catalog/products/vestido-de-festa-longo.jpg": {
+    "photo_id": 16358959,
+    "photographer": "jhon macias",
+    "url": "https://www.pexels.com/photo/smiling-woman-posing-in-evening-blue-dress-16358959/"
+  },
+  "images/catalog/products/oculos-de-sol-aviador.jpg": {
+    "photo_id": 32677214,
+    "photographer": "Fashion Needles",
+    "url": "https://www.pexels.com/photo/stylish-blue-aviator-sunglasses-on-white-background-32677214/"
+  },
+  "images/catalog/products/recreacao-com-monitores-1-hora.jpg": {
+    "photo_id": 21967199,
+    "photographer": "xomidov  Photo",
+    "url": "https://www.pexels.com/photo/adorable-boy-with-curly-hair-sitting-on-a-swing-21967199/"
+  },
+  "images/catalog/products/romance-best-seller.jpg": {
+    "photo_id": 16667202,
+    "photographer": "HANİFE DURAN",
+    "url": "https://www.pexels.com/photo/book-on-a-table-16667202/"
+  },
+  "images/catalog/products/vitamina-c-60-comprimidos.jpg": {
+    "photo_id": 14027296,
+    "photographer": "Supplements On Demand",
+    "url": "https://www.pexels.com/photo/close-up-shot-of-black-supplement-gummies-on-white-surface-14027296/"
+  },
+  "images/catalog/products/perfume-floral-50-ml.jpg": {
+    "photo_id": 28481966,
+    "photographer": "Yana Romanovich",
+    "url": "https://www.pexels.com/photo/artistic-shadow-of-perfume-bottle-with-hand-28481966/"
+  },
+  "images/catalog/products/prato-feito-com-frango-grelhado.jpg": {
+    "photo_id": 32986472,
+    "photographer": "J KREATOR",
+    "url": "https://www.pexels.com/photo/delicious-grilled-chicken-with-saffron-rice-on-plate-32986472/"
+  },
+  "images/catalog/products/protetor-solar-fps-50.jpg": {
+    "photo_id": 33538444,
+    "photographer": "Makrufin Muhammad",
+    "url": "https://www.pexels.com/photo/bright-package-design-of-spf-35-sunscreen-33538444/"
+  },
+  "images/catalog/products/recreacao-com-monitores-30-minutos.jpg": {
+    "photo_id": 15075000,
+    "photographer": "iso_ Lille",
+    "url": "https://www.pexels.com/photo/woman-in-pink-tank-top-with-colorful-strip-scarf-lying-on-ball-pit-15075000/"
+  },
+  "images/catalog/products/salada-completa.jpg": {
+    "photo_id": 6895775,
+    "photographer": "Eiliv Aceron",
+    "url": "https://www.pexels.com/photo/green-and-purple-vegetable-salad-on-white-ceramic-bowl-6895775/"
+  },
+  "images/catalog/products/sapato-social-de-couro.jpg": {
+    "photo_id": 4161710,
+    "photographer": "Ali Nafezarefi",
+    "url": "https://www.pexels.com/photo/black-leather-lace-up-shoe-4161710/"
+  },
+  "images/catalog/products/smartphone-galaxy-a.jpg": {
+    "photo_id": 947407,
+    "photographer": "Steve A Johnson",
+    "url": "https://www.pexels.com/photo/black-and-white-smartphone-947407/"
+  },
+  "images/catalog/products/suco-natural-500-ml.jpg": {
+    "photo_id": 15823268,
+    "photographer": "Amirho3in tavkoli",
+    "url": "https://www.pexels.com/photo/hand-holding-a-cocktail-15823268/"
+  },
+  "images/catalog/products/vestido-midi-floral.jpg": {
+    "photo_id": 7131254,
+    "photographer": "Jeff Denlea",
+    "url": "https://www.pexels.com/photo/a-woman-in-pink-floral-dress-7131254/"
+  }
+}

@@ -1,0 +1,11 @@
+# Configuração local das ferramentas de desenvolvimento
+.claude/
+
+# Sistema operacional e editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Pacotes gerados para deploy (podem conter o .env)
+*.zip
