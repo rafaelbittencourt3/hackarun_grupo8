@@ -2,8 +2,6 @@
 
 Projeto do Grupo 8 de Engenharia de Software. O aplicativo Android ajuda o visitante a encontrar um produto, descobrir em qual loja ele está no catálogo e seguir até lá com uma bússola.
 
-**[Acessar o site oficial do Guia do Shopping](https://hackarun8.safra.dev/)**
-
 ## Planejamento técnico inicial
 
 **[📄 Abrir o PDF do Grupo 8 no GitHub](output/pdf/Planejamento_grupo_8.pdf)**
