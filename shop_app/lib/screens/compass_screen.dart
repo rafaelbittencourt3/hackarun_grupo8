@@ -8,8 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../api.dart';
 import '../config.dart';
 import '../models.dart';
+import '../settings.dart';
 import '../theme.dart';
 import '../voice.dart';
 import '../widgets/brand.dart';
@@ -44,23 +46,82 @@ String directionHint(double angle, double distance) {
   return angle > 0 ? 'Vire à direita' : 'Vire à esquerda';
 }
 
+/// Distância, em metros, a partir da qual uma loja com promoção é oferecida
+/// ao visitante que passa por perto.
+const double offerRadius = 16;
+
+/// Promoção da loja mais próxima do visitante, entre as que ainda não foram
+/// mostradas, ou `null` se nenhuma estiver dentro do raio.
+Promotion? nearbyOffer({
+  required double latitude,
+  required double longitude,
+  required List<Promotion> offers,
+  required Set<int> seenStoreIds,
+  int? destinationStoreId,
+  double radius = offerRadius,
+}) {
+  Promotion? closest;
+  var closestDistance = radius;
+
+  for (final offer in offers) {
+    final store = offer.store;
+    if (store == null || store.id == destinationStoreId || seenStoreIds.contains(store.id)) {
+      continue;
+    }
+
+    final distance = Geolocator.distanceBetween(
+      latitude,
+      longitude,
+      store.latitude,
+      store.longitude,
+    );
+    if (distance <= closestDistance) {
+      closest = offer;
+      closestDistance = distance;
+    }
+  }
+
+  return closest;
+}
+
 class CompassScreen extends StatefulWidget {
   /// Bússola para uma única loja.
   const CompassScreen({super.key, required Store store})
       : singleStore = store,
         route = const [],
-        stopIndex = 0;
+        stopIndex = 0,
+        isCar = false,
+        startWithGps = false;
 
   /// Bússola guiando uma parada de um roteiro.
   const CompassScreen.forRoute({
     super.key,
     required this.route,
     required this.stopIndex,
-  }) : singleStore = null;
+  })  : singleStore = null,
+        isCar = false,
+        startWithGps = false;
+
+  /// Bússola de volta à vaga onde o visitante estacionou. A vaga é passada
+  /// como uma "loja" que guarda só o nome, a anotação e as coordenadas.
+  const CompassScreen.toCar({
+    super.key,
+    required Store car,
+    this.startWithGps = false,
+  })  : singleStore = car,
+        route = const [],
+        stopIndex = 0,
+        isCar = true;
 
   final Store? singleStore;
   final List<RouteStop> route;
   final int stopIndex;
+
+  /// Verdadeiro quando o destino é o carro do visitante, e não uma loja.
+  final bool isCar;
+
+  /// Abre já usando o GPS do aparelho em vez do modo demonstração.
+  final bool startWithGps;
 
   bool get isRoute => route.isNotEmpty;
 
@@ -109,7 +170,20 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
   bool _nearAnnounced = false;
   bool _arrivalAnnounced = false;
 
+  /// Promoções ativas do shopping, para avisar quando o visitante passa
+  /// perto de uma loja com oferta.
+  bool _offersOn = false;
+  List<Promotion> _offers = const [];
+  final Set<int> _offeredStoreIds = {};
+  Promotion? _currentOffer;
+  Timer? _offerTimer;
+
   Store get _store => widget.store;
+
+  /// Frase de chegada: "A Passo Certo está à sua frente" ou, para o carro,
+  /// "Seu carro está por aqui".
+  String get _arrivalPhrase =>
+      widget.isCar ? 'Seu carro está por aqui' : 'A ${_store.name} está à sua frente';
 
   @override
   void initState() {
@@ -117,13 +191,84 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
     _walk = AnimationController(vsync: this, duration: const Duration(seconds: 7))
       ..addListener(_onWalkTick);
     _listenToCompass();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _react());
+    _loadOffers();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.startWithGps) {
+        _setDemoMode(false);
+      }
+      _react();
+    });
+  }
+
+  Future<void> _loadOffers() async {
+    final enabled = await Settings.offersOnTheWay();
+    if (!mounted) {
+      return;
+    }
+    setState(() => _offersOn = enabled);
+
+    try {
+      final offers = await api.fetchPromotions();
+      if (mounted) {
+        _offers = offers;
+        _react();
+      }
+    } catch (_) {
+      // Sem as promoções, a bússola segue funcionando só com a navegação.
+    }
+  }
+
+  void _setOffersOn(bool enabled) {
+    setState(() {
+      _offersOn = enabled;
+      if (!enabled) {
+        _currentOffer = null;
+      }
+    });
+    Settings.setOffersOnTheWay(enabled);
+    if (enabled) {
+      _react();
+    }
+  }
+
+  /// Mostra a oferta de uma loja pela qual o visitante está passando, se
+  /// ele escolheu receber esses avisos.
+  void _checkOffers() {
+    if (!_offersOn) {
+      return;
+    }
+
+    final offer = nearbyOffer(
+      latitude: _latitude,
+      longitude: _longitude,
+      offers: _offers,
+      seenStoreIds: _offeredStoreIds,
+      destinationStoreId: widget.isCar ? null : _store.id,
+    );
+    final store = offer?.store;
+    if (offer == null || store == null) {
+      return;
+    }
+
+    _offeredStoreIds.add(store.id);
+    _offerTimer?.cancel();
+    _offerTimer = Timer(const Duration(seconds: 10), () {
+      if (mounted) {
+        setState(() => _currentOffer = null);
+      }
+    });
+
+    // O aviso é discreto de propósito: um cartão e uma vibração leve, sem
+    // interromper as instruções de voz da navegação.
+    setState(() => _currentOffer = offer);
+    HapticFeedback.lightImpact();
   }
 
   @override
   void dispose() {
     _compass?.cancel();
     _gps?.cancel();
+    _offerTimer?.cancel();
     _walk.dispose();
     Voice.stop();
     super.dispose();
@@ -191,7 +336,7 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
       if (!_arrivalAnnounced) {
         _arrivalAnnounced = true;
         HapticFeedback.heavyImpact();
-        final message = 'Você chegou. A ${_store.name} está à sua frente.';
+        final message = 'Você chegou. $_arrivalPhrase.';
         SemanticsService.announce(message, TextDirection.ltr);
         _say(message, force: true);
       }
@@ -201,9 +346,16 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
     if (distance < nearDistance && !_nearAnnounced) {
       _nearAnnounced = true;
       HapticFeedback.mediumImpact();
-      _say('Falta pouco. A ${_store.name} está a ${distance.round()} metros.', force: true);
+      _say(
+        widget.isCar
+            ? 'Falta pouco. Seu carro está a ${distance.round()} metros.'
+            : 'Falta pouco. A ${_store.name} está a ${distance.round()} metros.',
+        force: true,
+      );
       return;
     }
+
+    _checkOffers();
 
     if (hint != _lastSpokenHint) {
       if (hint == 'Siga em frente') {
@@ -369,7 +521,9 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
         title: Text(
           widget.isRoute
               ? 'Parada ${widget.stopIndex + 1} de ${widget.route.length}'
-              : 'Me leve até a loja',
+              : widget.isCar
+                  ? 'Voltar ao carro'
+                  : 'Me leve até a loja',
         ),
         actions: [
           IconButton(
@@ -404,7 +558,8 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
                       style: theme.textTheme.titleSmall?.copyWith(color: colors.secondary),
                     ),
                   Text(
-                    '${store.category} · ${store.floorLabel}',
+                    widget.isCar ? store.description : '${store.category} · ${store.floorLabel}',
+                    textAlign: TextAlign.center,
                     style: theme.textTheme.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
                   ),
                 ],
@@ -418,8 +573,8 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
                   child: Semantics(
                     liveRegion: true,
                     label: arrived
-                        ? 'Você está em frente à ${store.name}'
-                        : '$hint. A loja está a $distanceLabel.',
+                        ? 'Você chegou. $_arrivalPhrase'
+                        : '$hint. Faltam $distanceLabel.',
                     child: ExcludeSemantics(
                       child: AnimatedSwitcher(
                         duration: Duration(milliseconds: quick ? 0 : 450),
@@ -508,7 +663,7 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
                               style: theme.textTheme.titleLarge?.copyWith(color: Colors.white),
                             ),
                             Text(
-                              'A ${store.name} está à sua frente',
+                              _arrivalPhrase,
                               style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
                             ),
                           ],
@@ -540,7 +695,7 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
                   ),
                 ),
               ),
-              if (store.floor > 1)
+              if (store.floor > 1 && !widget.isCar)
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Chip(
@@ -561,6 +716,12 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
               Padding(
                 padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
                 child: Text(_gpsMessage!, textAlign: TextAlign.center),
+              ),
+            if (_currentOffer != null && !arrived)
+              _OfferBanner(
+                key: ValueKey(_currentOffer!.id),
+                offer: _currentOffer!,
+                onDismiss: () => setState(() => _currentOffer = null),
               ),
             const SizedBox(height: 12),
             Padding(
@@ -591,16 +752,116 @@ class _CompassScreenState extends State<CompassScreen> with SingleTickerProvider
               ),
             ),
             SwitchListTile(
+              dense: true,
+              title: const Text('Ofertas no caminho'),
+              subtitle: const Text(
+                'Avisa ao passar por uma loja em promoção',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              value: _offersOn,
+              onChanged: _setOffersOn,
+            ),
+            SwitchListTile(
+              dense: true,
               title: const Text('Modo demonstração'),
               subtitle: Text(
                 widget.isRoute && widget.stopIndex > 0
                     ? 'Usa a parada anterior como sua posição'
                     : 'Usa a entrada principal como sua posição',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               value: _demoMode,
               onChanged: _setDemoMode,
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Aviso de que o visitante está passando por uma loja com promoção.
+class _OfferBanner extends StatelessWidget {
+  const _OfferBanner({super.key, required this.offer, required this.onDismiss});
+
+  final Promotion offer;
+  final VoidCallback onDismiss;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+    final store = offer.store!;
+    final price = offer.price;
+
+    return FadeSlideIn(
+      child: Semantics(
+        liveRegion: true,
+        container: true,
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+          decoration: BoxDecoration(
+            color: colors.tertiaryContainer,
+            borderRadius: BorderRadius.circular(18),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: () => openStore(context, store),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 4, 10),
+              child: Row(
+                children: [
+                  CatalogImage(url: store.imageUrl, category: store.category, size: 52),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.local_offer_rounded, size: 14, color: colors.tertiary),
+                            const SizedBox(width: 4),
+                            Text(
+                              'Oferta no caminho',
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: colors.tertiary,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          offer.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.titleSmall
+                              ?.copyWith(color: colors.onTertiaryContainer),
+                        ),
+                        Text(
+                          [
+                            store.name,
+                            store.floorLabel,
+                            if (price != null) formatPrice(price),
+                          ].join(' · '),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodySmall
+                              ?.copyWith(color: colors.onTertiaryContainer),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    tooltip: 'Dispensar oferta',
+                    onPressed: onDismiss,
+                    icon: Icon(Icons.close_rounded, color: colors.onTertiaryContainer),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

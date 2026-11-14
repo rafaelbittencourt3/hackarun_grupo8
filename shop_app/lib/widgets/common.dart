@@ -19,6 +19,7 @@ IconData categoryIcon(String category) {
     'Esportes' => Icons.sports_soccer_rounded,
     'Lazer' => Icons.theaters_rounded,
     'Infantil' => Icons.toys_rounded,
+    'Estacionamento' => Icons.directions_car_rounded,
     _ => Icons.storefront_rounded,
   };
 }

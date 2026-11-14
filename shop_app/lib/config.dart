@@ -11,3 +11,8 @@ const String apiUrl = String.fromEnvironment(
 /// no modo demonstração da bússola.
 const double mallEntranceLatitude = -23.5505;
 const double mallEntranceLongitude = -46.6335;
+
+/// Estacionamento do shopping fictício, usado como vaga quando o aparelho
+/// não tem GPS disponível.
+const double mallParkingLatitude = -23.55082;
+const double mallParkingLongitude = -46.63318;

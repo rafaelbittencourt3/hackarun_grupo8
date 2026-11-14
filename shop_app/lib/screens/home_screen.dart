@@ -7,6 +7,7 @@ import '../theme.dart';
 import '../widgets/brand.dart';
 import '../widgets/common.dart';
 import 'chat_screen.dart';
+import 'parking_screen.dart';
 import 'stores_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -140,9 +141,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: _openGuide,
                               ),
                               _QuickAction(
-                                icon: Icons.storefront_outlined,
-                                label: 'Todas\nas lojas',
-                                onTap: _openStores,
+                                icon: Icons.local_parking_rounded,
+                                label: 'Onde\nestacionei',
+                                onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                    builder: (_) => const ParkingScreen(),
+                                  ),
+                                ),
                               ),
                             ],
                           ),

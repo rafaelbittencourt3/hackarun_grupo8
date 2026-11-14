@@ -151,6 +151,7 @@ Color categoryColor(String category) {
     'Casa e Decoração' => const Color(0xFF9C6A10),
     'Esportes' => const Color(0xFF087F5B),
     'Lazer' => const Color(0xFFC92A2A),
+    'Estacionamento' => const Color(0xFF1D4ED8),
     _ => AppColors.navy,
   };
 }

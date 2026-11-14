@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/api.dart';
 import 'package:shop_app/models.dart';
+import 'package:shop_app/parking.dart';
 import 'package:shop_app/photo_search.dart';
+import 'package:shop_app/screens/parking_screen.dart';
 import 'package:shop_app/screens/chat_screen.dart';
 import 'package:shop_app/screens/compass_screen.dart';
 import 'package:shop_app/screens/home_screen.dart';
@@ -31,6 +34,8 @@ http.Response _json(Object body, [int status = 200]) {
 }
 
 void main() {
+  setUp(() => SharedPreferences.setMockInitialValues({}));
+
   group('relativeAngle', () {
     test('is zero when the phone points at the store', () {
       expect(relativeAngle(90, 90), 0);
@@ -330,6 +335,192 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(sent, ['Quero um tênis', 'Qual o mais barato?']);
+  });
+
+  group('nearbyOffer', () {
+    Promotion offerAt(int storeId, double latitude, double longitude) {
+      return Promotion.fromJson({
+        'id': storeId,
+        'title': 'Oferta $storeId',
+        'description': 'Desconto',
+        'price': 10,
+        'ends_at': '2026-12-01',
+        'store': {
+          ..._storeJson,
+          'id': storeId,
+          'latitude': latitude,
+          'longitude': longitude
+        },
+      });
+    }
+
+    // Cerca de 11 m e 55 m ao norte do ponto de referência.
+    final close = offerAt(2, -23.5504, -46.6335);
+    final far = offerAt(3, -23.5500, -46.6335);
+
+    test('returns the promotion of a store within the radius', () {
+      final offer = nearbyOffer(
+        latitude: -23.5505,
+        longitude: -46.6335,
+        offers: [far, close],
+        seenStoreIds: {},
+      );
+
+      expect(offer?.store?.id, 2);
+    });
+
+    test('skips the destination, stores already shown and stores too far', () {
+      double lat = -23.5505, lng = -46.6335;
+
+      expect(
+        nearbyOffer(
+            latitude: lat,
+            longitude: lng,
+            offers: [close],
+            seenStoreIds: {},
+            destinationStoreId: 2),
+        isNull,
+      );
+      expect(
+        nearbyOffer(
+            latitude: lat, longitude: lng, offers: [close], seenStoreIds: {2}),
+        isNull,
+      );
+      expect(
+        nearbyOffer(
+            latitude: lat, longitude: lng, offers: [far], seenStoreIds: {}),
+        isNull,
+      );
+    });
+  });
+
+  group('parking', () {
+    test('the parked time is written in words', () {
+      expect(parkedFor(const Duration(seconds: 20)), 'agora há pouco');
+      expect(parkedFor(const Duration(minutes: 25)), 'há 25 min');
+      expect(parkedFor(const Duration(hours: 2)), 'há 2 h');
+      expect(parkedFor(const Duration(minutes: 80)), 'há 1 h 20 min');
+    });
+
+    testWidgets('the visitor marks the spot, is guided back and releases it',
+        (tester) async {
+      await tester.pumpWidget(const MaterialApp(home: ParkingScreen()));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Estacionou? Marque a vaga.'), findsOneWidget);
+
+      await tester.enterText(find.byType(TextField), 'G2, VAGA B14');
+      await tester.ensureVisible(find.text('Usar vaga de demonstração'));
+      await tester.tap(find.text('Usar vaga de demonstração'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('G2, VAGA B14'), findsOneWidget);
+      expect(find.textContaining('Estacionado agora há pouco'), findsOneWidget);
+
+      final saved = await ParkingStorage.load();
+      expect(saved?.note, 'G2, VAGA B14');
+      expect(saved?.fromGps, isFalse);
+
+      await tester.tap(find.text('Me leve até o carro'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Voltar ao carro'), findsOneWidget);
+      expect(find.text('Seu carro'), findsOneWidget);
+
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Liberar vaga'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Estacionou? Marque a vaga.'), findsOneWidget);
+      expect(await ParkingStorage.load(), isNull);
+    });
+
+    testWidgets('a spot marked earlier is still there when the app reopens',
+        (tester) async {
+      await ParkingStorage.save(ParkingSpot(
+        latitude: -23.55,
+        longitude: -46.63,
+        savedAt: DateTime.now().subtract(const Duration(hours: 4)),
+        fromGps: true,
+        note: 'PISO AZUL',
+      ));
+
+      await tester.pumpWidget(const MaterialApp(home: ParkingScreen()));
+      await tester.pumpAndSettle();
+
+      expect(find.text('PISO AZUL'), findsOneWidget);
+      expect(find.textContaining('Estacionado há 4 h'), findsOneWidget);
+      expect(find.textContaining('Você passou das 3 horas'), findsOneWidget);
+    });
+  });
+
+  group('offers on the way', () {
+    // Loja com promoção no meio do caminho entre a entrada e a Passo Certo.
+    void mockPromotionOnThePath() {
+      api = ApiClient(
+        baseUrl: 'http://test/api/v1',
+        client: MockClient((request) async => _json({
+              'data': [
+                {
+                  'id': 9,
+                  'title': 'Fone em oferta',
+                  'description': 'Desconto',
+                  'price': 149.9,
+                  'ends_at': '2026-12-01',
+                  'store': {
+                    ..._storeJson,
+                    'id': 4,
+                    'name': 'TechPoint',
+                    'latitude': -23.550355,
+                    'longitude': -46.63357,
+                  },
+                },
+              ],
+            })),
+      );
+    }
+
+    Future<void> walkHalfway(WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: CompassScreen(store: Store.fromJson(_storeJson)),
+      ));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Simular caminhada'));
+      await tester.tap(find.text('Simular caminhada'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 3500));
+      await tester.pump(const Duration(milliseconds: 500));
+    }
+
+    testWidgets('stay hidden until the visitor turns them on', (tester) async {
+      mockPromotionOnThePath();
+
+      await walkHalfway(tester);
+
+      expect(find.text('Oferta no caminho'), findsNothing);
+
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('show the promotion of a store the visitor walks by',
+        (tester) async {
+      SharedPreferences.setMockInitialValues({'offers_on_the_way': true});
+      mockPromotionOnThePath();
+
+      await walkHalfway(tester);
+
+      expect(find.text('Oferta no caminho'), findsOneWidget);
+      expect(find.text('Fone em oferta'), findsOneWidget);
+      expect(find.textContaining('TechPoint'), findsOneWidget);
+
+      await tester.tap(find.byTooltip('Dispensar oferta'));
+      await tester.pump();
+
+      expect(find.text('Oferta no caminho'), findsNothing);
+
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
+    });
   });
 
   testWidgets(
