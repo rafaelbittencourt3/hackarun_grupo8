@@ -6,7 +6,7 @@
 
 Imagine chegar ao shopping para comprar um tênis de corrida sem saber quais lojas vendem esse tipo de produto, em qual andar ficam ou onde há uma oferta. O **Guia do Shopping** reúne essas informações em um app Android e ajuda o visitante a seguir até a loja escolhida.
 
-**[Baixar APK assinado para Android](https://github.com/rafaelbittencourt3/hackarun_grupo8/releases/download/v1.0.0/guia-do-shopping.apk)** (v1.0.0, 41,6 MB) · **[Ver o PDF do planejamento técnico](output/pdf/Planejamento_grupo_8.pdf)**
+**[Baixar APK assinado para Android](https://github.com/rafaelbittencourt3/hackarun_grupo8/releases/download/v1.1.0/guia-do-shopping.apk)** (v1.1.0) · **[Ver o PDF do planejamento técnico](output/pdf/Planejamento_grupo_8.pdf)**
 
 ## Como funciona na prática
 
@@ -29,9 +29,9 @@ Na demonstração, o visitante pediu um presente, um tênis e um lanche com até
 
 ![Roteiro gerado pelo app em modo demonstração. Livraria Página Um para o livro, Passo Certo para o tênis e duas paradas no Café Aroma para o lanche e o café.](output/imagens/roteiro-de-compras.png)
 
-## Novas funções em desenvolvimento
+## Novidades da versão 1.1.0
 
-As funções abaixo já estão na versão de testes do Android. O APK público v1.0.0 ainda é a versão anterior.
+O APK assinado da versão 1.1.0 inclui as duas funções abaixo.
 
 ### Onde estacionei
 
@@ -77,7 +77,7 @@ A API oficial usa o endereço `https://hackarun8.safra.dev/api/v1`.
 |---|---|
 | `GET /lojas` | Lista lojas e aceita filtros de busca e categoria (`q` e `category`) |
 | `GET /lojas/{id}` | Carrega a ficha da loja com produtos e promoções |
-| `GET /promocoes` | Carrega as ofertas da tela inicial |
+| `GET /promocoes` | Carrega as ofertas da tela inicial e as ofertas no caminho |
 | `POST /chat` | Envia perguntas ou rótulos da foto e recebe a resposta do Guia |
 | `POST /roteiro` | Solicita paradas com estimativas de tempo e custo |
 
