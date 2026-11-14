@@ -29,6 +29,23 @@ Na demonstração, o visitante pediu um presente, um tênis e um lanche com até
 
 ![Roteiro gerado pelo app em modo demonstração. Livraria Página Um para o livro, Passo Certo para o tênis e duas paradas no Café Aroma para o lanche e o café.](output/imagens/roteiro-de-compras.png)
 
+## Novas funções em desenvolvimento
+
+As funções abaixo já estão na versão de testes do Android. O APK público v1.0.0 ainda é a versão anterior.
+
+### Onde estacionei
+
+Antes de entrar no shopping, abra **Onde estacionei** na tela inicial e toque em **Marcar minha vaga aqui**. Você pode anotar o andar e o número da vaga. Na saída, toque em **Me leve até o carro** para voltar com a ajuda da bússola.
+
+![Ilustração do estacionamento. A primeira tela mostra como salvar o andar e a vaga. Na segunda, a bússola aponta para o carro.](output/imagens/onde-estacionei.png)
+
+### Ofertas no caminho
+
+Ligue **Ofertas no caminho** na bússola para ver promoções de lojas próximas enquanto segue seu trajeto. O app mostra o cartão ao passar a até **16 metros** de outra loja com uma oferta ativa no catálogo. A opção vem desligada e o aviso aparece uma vez por loja, sem interromper as instruções de voz.
+
+![Ilustração da bússola a caminho da Passo Certo. Um cartão mostra o Combo da casa na Burger House, com as ofertas no caminho ativadas.](output/imagens/ofertas-no-caminho.png)
+
+
 ## Como experimentar
 
 Abra o APK no Android para instalar. Se o sistema pedir, autorize a instalação pela origem usada para baixar o arquivo.
