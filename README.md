@@ -10,6 +10,8 @@ Imagine chegar ao shopping para comprar um tênis de corrida sem saber quais loj
 
 **[Baixar APK assinado para Android](https://github.com/rafaelbittencourt3/hackarun_grupo8/releases/download/v1.1.1/guia-do-shopping.apk)** (v1.1.1)
 
+**[Assistir à demonstração do Guia do Shopping no YouTube](https://youtube.com/shorts/22XdJWV4gtI?feature=share)**
+
 ## Como funciona na prática
 
 1. **O visitante diz o que procura.** Pode pesquisar pelo nome, perguntar ao Guia “Onde encontro um tênis de corrida?” ou usar uma foto para buscar produtos parecidos.
