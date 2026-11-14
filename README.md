@@ -8,7 +8,7 @@
 
 Imagine chegar ao shopping para comprar um tênis de corrida sem saber quais lojas vendem esse tipo de produto, em qual andar ficam ou onde há uma oferta. O **Guia do Shopping** reúne essas informações em um app Android e ajuda o visitante a seguir até a loja escolhida.
 
-**[Baixar APK assinado para Android](https://github.com/rafaelbittencourt3/hackarun_grupo8/releases/download/v1.1.1/guia-do-shopping.apk)** (v1.1.1) · **[Ver o PDF do planejamento técnico](output/pdf/Planejamento_grupo_8.pdf)**
+**[Baixar APK assinado para Android](https://github.com/rafaelbittencourt3/hackarun_grupo8/releases/download/v1.1.1/guia-do-shopping.apk)** (v1.1.1)
 
 ## Como funciona na prática
 
