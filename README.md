@@ -1,12 +1,14 @@
 # Guia do Shopping
 
+<img src="output/imagens/logo-guia-do-shopping.png" alt="Logo do Guia do Shopping" width="96">
+
 **Grupo 8 Squirtle**
 
 **Tema 03 — Descoberta de produtos, lojas e promoções**
 
 Imagine chegar ao shopping para comprar um tênis de corrida sem saber quais lojas vendem esse tipo de produto, em qual andar ficam ou onde há uma oferta. O **Guia do Shopping** reúne essas informações em um app Android e ajuda o visitante a seguir até a loja escolhida.
 
-**[Baixar APK assinado para Android](https://github.com/rafaelbittencourt3/hackarun_grupo8/releases/download/v1.1.0/guia-do-shopping.apk)** (v1.1.0) · **[Ver o PDF do planejamento técnico](output/pdf/Planejamento_grupo_8.pdf)**
+**[Baixar APK assinado para Android](https://github.com/rafaelbittencourt3/hackarun_grupo8/releases/download/v1.1.1/guia-do-shopping.apk)** (v1.1.1) · **[Ver o PDF do planejamento técnico](output/pdf/Planejamento_grupo_8.pdf)**
 
 ## Como funciona na prática
 
@@ -29,9 +31,9 @@ Na demonstração, o visitante pediu um presente, um tênis e um lanche com até
 
 ![Roteiro gerado pelo app em modo demonstração. Livraria Página Um para o livro, Passo Certo para o tênis e duas paradas no Café Aroma para o lanche e o café.](output/imagens/roteiro-de-compras.png)
 
-## Novidades da versão 1.1.0
+## Novidades do Android
 
-O APK assinado da versão 1.1.0 inclui as duas funções abaixo.
+A versão 1.1.1 traz a nova logo no ícone do Android e inclui as duas funções abaixo.
 
 ### Onde estacionei
 
